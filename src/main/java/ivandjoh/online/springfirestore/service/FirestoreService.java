@@ -1,11 +1,12 @@
 package ivandjoh.online.springfirestore.service;
 
-import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import org.codehaus.jackson.JsonParseException;
+import org.springframework.http.ResponseEntity;
 
-@Service
-public class FirestoreService {
+import java.io.IOException;
 
-    private String saveChatMessage() {
-        return "Ok";
-    }
+public interface FirestoreService {
+
+    ResponseEntity<?> getAllUsers() throws JsonParseException, JsonMappingException, IOException;
 }
