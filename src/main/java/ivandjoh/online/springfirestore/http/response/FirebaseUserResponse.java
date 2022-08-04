@@ -4,4 +4,8 @@ import lombok.Data;
 
 @Data
 public class FirebaseUserResponse {
+
+    private String userId;
+    private String chatId;
+
 }
