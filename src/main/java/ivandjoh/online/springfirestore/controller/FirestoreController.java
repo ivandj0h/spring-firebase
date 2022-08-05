@@ -1,6 +1,7 @@
 package ivandjoh.online.springfirestore.controller;
 
 import ivandjoh.online.springfirestore.http.request.FirebaseUserRequest;
+import ivandjoh.online.springfirestore.http.request.HttpFirstQuestionRequest;
 import ivandjoh.online.springfirestore.http.request.chatdetails.DataItem;
 import ivandjoh.online.springfirestore.service.FirestoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +41,11 @@ public class FirestoreController {
     public String saveChat(@RequestBody DataItem dataItem) throws ExecutionException, InterruptedException, IOException {
 
         return firestoreService.saveChat(dataItem);
+    }
+
+    @PostMapping("/firestore/save-first-question")
+    public String saveFirstQuestion(@RequestBody HttpFirstQuestionRequest firstQuestion) throws ExecutionException, InterruptedException, IOException {
+
+        return firestoreService.saveFirstQuestion(firstQuestion);
     }
 }
