@@ -22,6 +22,7 @@ public class FirestoreController {
     @Autowired
     FirestoreService firestoreService;
 
+
     @GetMapping("/firestore")
     public ResponseEntity<?> getAllUsers() throws JsonParseException, JsonMappingException, IOException {
         log.info("--- Get all users ---");

@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import ivandjoh.online.springfirestore.http.request.FirebaseUserRequest;
+import ivandjoh.online.springfirestore.http.request.chatdetails.AnswerItem;
 import ivandjoh.online.springfirestore.http.request.chatdetails.DataItem;
 import ivandjoh.online.springfirestore.http.response.FirebaseResponse;
 import ivandjoh.online.springfirestore.service.FirestoreService;
@@ -23,10 +24,10 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class FirestoreServiceImpl implements FirestoreService {
 
-    @Value("${firebase.collection-name}")
+    @Value("${firebase.collection-user}")
     private String collectionUser;
 
-    @Value("${firebase.collection-name-chat}")
+    @Value("${firebase.collection-chat}")
     private String collectionChat;
 
     @Override
@@ -38,6 +39,7 @@ public class FirestoreServiceImpl implements FirestoreService {
         return ResponseEntity.ok(json.converter(data));
     }
 
+    @Override
     public String saveUser(FirebaseUserRequest userRequest)
             throws JsonParseException, JsonMappingException, ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
@@ -69,30 +71,35 @@ public class FirestoreServiceImpl implements FirestoreService {
 
     }
 
+    @Override
     public String saveChat(DataItem dataItem)
-            throws JsonParseException, JsonMappingException, ExecutionException, InterruptedException {
+            throws JsonParseException, JsonMappingException, ExecutionException, InterruptedException
+    {
         Firestore db = FirestoreClient.getFirestore();
 
-        String chatId = "chatId-" + dataItem.getId();
+        String chatsId = "chatId-" + dataItem.getId();
         String title = dataItem.getTitle();
 
-        DocumentReference documentReference = db.collection(collectionChat).document(chatId);
+        DocumentReference documentReference = db.collection(collectionChat).document(chatsId);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
 
         if (document.exists()) {
 
-            Map<String, Object> data = new HashMap<>();
-            ArrayList<Object> ch = new ArrayList<>();
-            Collections.addAll(ch, document.getData(), chatId);
-            data.put(getSaltStringChat(), chatId);
-            ApiFuture<WriteResult> saveChat = db.collection(collectionChat).document(chatId).set(data, SetOptions.merge());
-
-            return saveChat.get().getUpdateTime().toString();
+//            Map<String, Object> data = new HashMap<>();
+//            ArrayList<Object> ch = new ArrayList<>();
+////            data.put("answer", dataItem.getAnswer());
+//            Collections.addAll(ch, document.getData(), dataItem.getAnswer());
+//            data.put(getSaltStringChat(), chatsId);
+//            ApiFuture<WriteResult> saveChat = db.collection(collectionChat).document(chatsId).set(data, SetOptions.merge());
+//
+//            return saveChat.get().getUpdateTime().toString();
+            return "";
         } else {
-            Map<String, Object> data = new HashMap<>();
-            data.put(getSaltStringChat(), chatId);
-            ApiFuture<WriteResult> future1 = db.collection(collectionChat).document(chatId).set(data);
+            Map<String, Object> answer = new HashMap<>();
+            answer.put("answer", dataItem.getAnswer());
+//            answer.put("answer", answer);
+            ApiFuture<WriteResult> future1 = db.collection(collectionChat).document(chatsId).set(answer);
             return future1.get().getUpdateTime().toString();
         }
     }
