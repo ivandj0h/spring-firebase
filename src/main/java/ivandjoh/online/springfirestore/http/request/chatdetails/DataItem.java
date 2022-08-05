@@ -1,11 +1,14 @@
 package ivandjoh.online.springfirestore.http.request.chatdetails;
 
+import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class DataItem {
+	@DocumentId
+	private String id;
 	private String createdAt;
 	private boolean isSaidThanks;
 	private String title;
@@ -18,7 +21,6 @@ public class DataItem {
 	private String noticeAnonymous;
 	private String shortContent;
 	private int userUnreadCount;
-	private String id;
 	private User user;
 	private boolean isClosed;
 }
