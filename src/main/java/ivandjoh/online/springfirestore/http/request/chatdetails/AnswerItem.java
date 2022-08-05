@@ -2,6 +2,7 @@ package ivandjoh.online.springfirestore.http.request.chatdetails;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 @Data
@@ -21,6 +22,8 @@ import lombok.Data;
 		"referral_id"
 })
 public class AnswerItem{
+
+	@DocumentId
 	@JsonProperty("id")
 	private String id;
 	@JsonProperty("content")
